@@ -19,7 +19,7 @@ namespace Hopital.Classes
         private static void Titre()
         {
             Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("Bienvenue dans la gestion HOPITAL M2I");
+            Console.WriteLine(Messages.TitreProjet);
             Console.WriteLine("----------------------------------------------------");
         }
         /// <summary>
@@ -28,7 +28,7 @@ namespace Hopital.Classes
         private static void MenuPrincipal()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Menu principal");
+            Console.WriteLine(Messages.MenuPrincipal);
             Console.WriteLine(" ");
 
             do
