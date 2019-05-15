@@ -39,7 +39,7 @@ namespace Hopital.Classes
                 Console.WriteLine("0 - Quitter");
                 Console.WriteLine(" ");
                 Console.Write(Messages.Choix);
-                try
+                try 
                 {
                     choix = Convert.ToInt32(Console.ReadLine());
                 }
