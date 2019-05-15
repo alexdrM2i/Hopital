@@ -65,7 +65,7 @@ namespace Hopital.Classes
                     case 0:
                         Console.Write(Messages.Sortie);
                         string choixSortie = Console.ReadLine();
-
+                        //
                         if (choixSortie.ToUpper() == "O")
                         {
                             Environment.Exit(0);
