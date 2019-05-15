@@ -47,7 +47,7 @@ namespace Hopital.Classes
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.BackgroundColor = ConsoleColor.White;
-                    Console.WriteLine(MessageErreur.NotANumber);
+                    Console.WriteLine(Messages.NotANumber);
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
                 }
