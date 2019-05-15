@@ -9,7 +9,7 @@ namespace Hopital.Classes
         private int id;
         private string nom;
         private string prenom;
-        private DateTime dateNaissance;
+        private string dateNaissance;
         private string sexe;
         private string adresse;
         private string situation;
@@ -24,7 +24,7 @@ namespace Hopital.Classes
         public int Id { get => id; set => id = value; }
         public string Nom { get => nom; set => nom = value; }
         public string Prenom { get => prenom; set => prenom = value; }
-        public DateTime DateNaissance { get => dateNaissance; set => dateNaissance = value; }
+        public string DateNaissance { get => dateNaissance; set => dateNaissance = value; }
         public string Sexe { get => sexe; set => sexe = value; }
         public string Adresse { get => adresse; set => adresse = value; }
         public string Situation { get => situation; set => situation = value; }
