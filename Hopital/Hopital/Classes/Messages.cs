@@ -11,6 +11,6 @@ namespace Hopital.Classes
         public static string NotANumber = "Veuillez saisir un chiffre";
         public static string Choix = "Veuillez indiquer votre choix ";
         public static string NotAString = "Veuillez indiquer une chaine de caractère validre ";
-        public static string Sortie = "Voulez-vous vraiment quitter le programme ?";
+        public static string Sortie = "Voulez-vous vraiment quitter le programme O / N ?";
     }
 }

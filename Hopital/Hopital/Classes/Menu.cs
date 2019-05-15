@@ -55,21 +55,43 @@ namespace Hopital.Classes
                 switch (choix)
                 {
                     case 1:
-
+                        MenuPatient();
                         break;
                     case 2:
+                        MenuMedecin();
                         break;
                     case 3:
                         break;
                     case 0:
                         Console.Write(Messages.Sortie);
+                        string choixSortie = Console.ReadLine();
 
-                        Environment.Exit(0);
+                        if (choixSortie.ToUpper() == "O")
+                        {
+                            Environment.Exit(0);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Accueil();
+                        }
+
+
                         break;
                 }
             }
             while (choix != 0);
 
+        }
+
+        private static void MenuMedecin()
+        {
+           
+        }
+
+        private static void MenuPatient()
+        {
+            
         }
     }
 }
