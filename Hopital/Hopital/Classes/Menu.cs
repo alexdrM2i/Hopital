@@ -82,11 +82,16 @@ namespace Hopital.Classes
             }
             while (choix != 0);
 
+        
         }
 
         private static void MenuMedecin()
         {
-           
+            Console.Clear();
+            Titre();
+            Console.WriteLine(Messages.TitreMedecin);
+            Console.WriteLine($"1 - {Messages.TitreAjouterdMedecin}");
+            Console.WriteLine($"2 - {Messages.TitreModifierMedecin}");
         }
 
         private static void MenuPatient()
