@@ -91,7 +91,7 @@ namespace Hopital.Classes
 
         private static void MenuPatient()
         {
-            //
+            
         }
     }
 }
