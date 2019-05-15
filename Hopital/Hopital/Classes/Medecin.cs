@@ -20,6 +20,12 @@ namespace Hopital.Classes
         {
             
         }
+
+        public void Add()
+        {
+            Connection.Instance.Open();
+            Connection.Instance.Close();
+        }
     }
     
 }
