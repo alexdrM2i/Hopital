@@ -19,7 +19,7 @@ namespace Hopital.Classes
 
         {
             get
-            {
+            { 
                 lock (_lock)
                 {
                     if (_instance == null)
