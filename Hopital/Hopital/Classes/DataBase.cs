@@ -30,10 +30,8 @@ namespace Hopital.Classes
         }
 
         static List<Specialite> listeSpecialites = new List<Specialite>();
-
         public static List<Specialite> GetSpecialite()
-        {
-            
+        {          
             SqlCommand command = new SqlCommand("SELECT * FROM Spec", Connection.Instance);
             Connection.Instance.Open();
             SqlDataReader reader = command.ExecuteReader();
@@ -51,7 +49,6 @@ namespace Hopital.Classes
             command.Dispose();
             Connection.Instance.Close();
             return listeSpecialites;
-
         }
 
         public static void AddMedecin()
@@ -68,20 +65,15 @@ namespace Hopital.Classes
             {
                 Console.Write(s.CodeSpec.ToString()+" "+ s.SpecialiteM+" / ");
             }
-            m.CodeSpecialite = Convert.ToInt32(Console.ReadLine());
-            // listeSpecialites.ForEach(x => Console.WriteLine(x.CodeSpec.ToString(), x.SpecialiteM));
-            
+            m.CodeSpecialite = Convert.ToInt32(Console.ReadLine());     
             SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", m.Nom));
             command.Parameters.Add(new SqlParameter("@p", m.Prenom));
             command.Parameters.Add(new SqlParameter("@t", m.Tel));
             command.Parameters.Add(new SqlParameter("@cs", m.CodeSpecialite));
-
             Connection.Instance.Open();
             m.Id = (int)command.ExecuteScalar();
             command.Dispose();
-
-
             Connection.Instance.Close();
         }
 
@@ -90,7 +82,7 @@ namespace Hopital.Classes
             Patient p = new Patient();
             Console.Write("Nom: ");
             p.Nom = Console.ReadLine();
-            Console.Write("Prénom: ");
+            Console.Write("Prénom: ");  
             p.Prenom = Console.ReadLine();
             Console.Write("Date de naissance: ");
             p.DateNaissance = Console.ReadLine();
