@@ -6,7 +6,7 @@ namespace Hopital.Classes
 {
     public class Medecin
     {
-        private int id;
+        private int id; 
         private string nom;
         private string prenom;
         private string tel;
