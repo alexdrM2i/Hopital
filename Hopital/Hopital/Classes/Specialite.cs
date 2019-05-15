@@ -15,7 +15,7 @@ namespace Hopital.Classes
 
         public Specialite()
         {
-            
+             / /
         }
 
     }
