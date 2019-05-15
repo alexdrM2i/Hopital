@@ -7,7 +7,7 @@ namespace Hopital.Classes
     public static class Menu
     {
         private static int choix = 999;
-
+         
         public static void Accueil()
         {
             Titre();
