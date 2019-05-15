@@ -12,7 +12,7 @@ namespace Hopital.Classes
         private static object _lock = new object();
 
         static string pathConnection = Directory.GetCurrentDirectory();
-        static string newPath = Path.GetFullPath(Path.Combine(pathConnection, @"..\..\"));
+        static string newPath = Path.GetFullPath(Path.Combine(pathConnection, @"..\..\..\"));
         private static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + newPath + @"HospitalDB.mdf;Integrated Security=True";
 
         public static SqlConnection Instance      
