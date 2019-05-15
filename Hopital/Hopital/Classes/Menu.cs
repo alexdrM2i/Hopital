@@ -19,7 +19,7 @@ namespace Hopital.Classes
         private static void Titre()
         {
             Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("Bienvenue dans la gestion HOPITAL M2I");
+            Console.WriteLine(Messages.TitreProjet);
             Console.WriteLine("----------------------------------------------------");
         }
         /// <summary>
@@ -28,17 +28,17 @@ namespace Hopital.Classes
         private static void MenuPrincipal()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Menu principal");
+            Console.WriteLine(Messages.MenuPrincipal);
             Console.WriteLine(" ");
 
             do
             {
                 Console.WriteLine("1 - Gestion du patient");
                 Console.WriteLine("2 - Gestion du médecin");
-                Console.WriteLine("2 - Gestion du médecin");
+                Console.WriteLine("3 - Gestion du médecin");
                 Console.WriteLine("0 - Quitter");
                 Console.WriteLine(" ");
-                Console.Write(" Veuillez indiquer votre choix : ");
+                Console.Write(Messages.Choix);
                 try
                 {
                     choix = Convert.ToInt32(Console.ReadLine());
@@ -47,9 +47,25 @@ namespace Hopital.Classes
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.BackgroundColor = ConsoleColor.White;
-                    Console.WriteLine(MessageErreur.NotANumber);
+                    Console.WriteLine(Messages.NotANumber);
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.White;
+                }
+
+                switch (choix)
+                {
+                    case 1:
+
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 0:
+                        Console.Write(Messages.Sortie);
+
+                        Environment.Exit(0);
+                        break;
                 }
             }
             while (choix != 0);
