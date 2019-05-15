@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hopital.Classes;
+using System;
 
 namespace Hopital
 {
@@ -6,7 +7,7 @@ namespace Hopital
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu.Accueil();
             Console.ReadLine();
         }
     }
