@@ -39,7 +39,7 @@ namespace Hopital.Classes
                 Console.WriteLine("0 - Quitter");
                 Console.WriteLine(" ");
                 Console.Write(Messages.Choix);
-                try
+                try 
                 {
                     choix = Convert.ToInt32(Console.ReadLine());
                 }
@@ -90,7 +90,7 @@ namespace Hopital.Classes
             Console.Clear();
             Titre();
             Console.WriteLine(Messages.TitreMedecin);
-            Console.WriteLine($"1 - {Messages.TitreAjouterdMedecin}");
+            Console.WriteLine($"1 - {Messages.TitreAjouterMedecin}");
             Console.WriteLine($"2 - {Messages.TitreModifierMedecin}");
         }
 
