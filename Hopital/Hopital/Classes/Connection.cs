@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Text;
 
 namespace Hopital.Classes
@@ -9,7 +10,13 @@ namespace Hopital.Classes
     {
         private static SqlConnection _instance = null;
         private static object _lock = new object();
-        public static SqlConnection Instance
+
+        static string pathConnection = Directory.GetCurrentDirectory();
+        static string newPath = Path.GetFullPath(Path.Combine(pathConnection, @"..\..\"));
+        private static string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + newPath + @"HospitalDB.mdf;Integrated Security=True";
+
+        public static SqlConnection Instance      
+
         {
             get
             {
@@ -17,7 +24,7 @@ namespace Hopital.Classes
                 {
                     if (_instance == null)
                     {
-                        _instance = new SqlConnection(@"C:\USERS\ADMINISTRATEUR\SOURCE\REPOS\ALEXDRM2I\HOPITAL\HOPITAL\HOPITAL\HOSPITALDB.MDF");
+                        _instance = new SqlConnection(ConnectionString);
                     }
                     return _instance;
                 }
@@ -27,5 +34,6 @@ namespace Hopital.Classes
         {
 
         }
+
     }
 }
