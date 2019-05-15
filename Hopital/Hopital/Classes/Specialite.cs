@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Hopital.Classes
 {
+
     public class Specialite
     {
         private int id;
