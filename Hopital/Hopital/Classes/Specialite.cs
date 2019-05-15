@@ -9,7 +9,7 @@ namespace Hopital.Classes
     {
         private int id;
         private string specialiteM;
-
+         
         public int Id { get => id; set => id = value; }
         public string SpecialiteM { get => specialiteM; set => specialiteM = value; }
 
