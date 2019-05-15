@@ -55,10 +55,10 @@ namespace Hopital.Classes
                 switch (choix)
                 {
                     case 1:
-                        MenuPatient();
+                        MenuMedecinPrincipal();
                         break;
                     case 2:
-                        MenuMedecin();
+                        MenuPatientPrincipal();
                         break;
                     case 3:
                         break;
@@ -85,18 +85,28 @@ namespace Hopital.Classes
         
         }
 
-        private static void MenuMedecin()
+        private static void MenuMedecinPrincipal()
         {
             Console.Clear();
             Titre();
+            Console.WriteLine(" ");
             Console.WriteLine(Messages.TitreMedecin);
-            Console.WriteLine($"1 - {Messages.TitreAjouterdMedecin}");
+            Console.WriteLine($"1 - {Messages.TitreAjouterMedecin}");
             Console.WriteLine($"2 - {Messages.TitreModifierMedecin}");
         }
 
-        private static void MenuPatient()
+        private static void MenuPatientPrincipal()
         {
             
+        }
+        private static void MenuMedecinSpecialite()
+        {
+            Console.Clear();
+            Titre();
+            Console.WriteLine(" ");
+            Console.WriteLine($"{Messages.TitreSpecialiteMedecin}");
+            Console.WriteLine($"1 -{Messages.TitreAjouterSpecialiteMedecin}");
+            Console.WriteLine($"2 - {Messages.TitreModifierSpecialiteMedecin}");
         }
     }
 }

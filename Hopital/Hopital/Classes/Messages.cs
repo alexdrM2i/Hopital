@@ -15,5 +15,9 @@ namespace Hopital.Classes
         public static string TitreMedecin = "Gestion du médecin";
         public static string TitreAjouterMedecin = "Ajouter médecin";
         public static string TitreModifierMedecin = "Modifier médecin";
+        public static string TitreSpecialiteMedecin = "Spécialité du médecin";
+        public static string TitreAjouterSpecialiteMedecin = " Ajouter spécialité pour un médecin";
+        public static string TitreModifierSpecialiteMedecin = "Modifier une spécialité pour le médecin";
+
     }
 }
