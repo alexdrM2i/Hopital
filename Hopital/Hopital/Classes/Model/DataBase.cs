@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hopital.Classes.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -55,6 +56,29 @@ namespace Hopital.Classes
             return listeSpecialites;
         }
 
+        List<Medecin> listeMedecins = new List<Medecin>();
+        public List<Medecin> GetMedecinById(int id)
+        {
+            SqlCommand command = new SqlCommand("SELECT m.Nom, m.Prenom FROM Medecin as m where m.idservice= @id", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@id", id));
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Medecin m = new Medecin()
+                {
+                    Nom = reader.GetString(0),
+                    Prenom = reader.GetString(1),
+
+                };
+                listeMedecins.Add(m);
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return listeMedecins;
+        }
+
         public void AddMedecin()
         {
             Medecin m = new Medecin();
@@ -79,6 +103,27 @@ namespace Hopital.Classes
             m.Id = (int)command.ExecuteScalar();
             command.Dispose();
             Connection.Instance.Close();
+        }
+
+        List<Service> listeServices = new List<Service>();
+        public List<Service> GetService()
+        {
+            SqlCommand command = new SqlCommand("SELECT * FROM Service", Connection.Instance);
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Service s = new Service()
+                {
+                    Id = reader.GetInt32(0),
+                    Nom = reader.GetString(1),
+                };
+                listeServices.Add(s);
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return listeServices;
         }
         #endregion
 
@@ -115,7 +160,7 @@ namespace Hopital.Classes
        
         public Patient GetPatient(string nom)
         {
-            SqlCommand command = new SqlCommand("SELECT Nom, Prenom, DateNaissance, Sexe, Adresse, Tel FROM Patient WHERE Nom = @n", Connection.Instance);
+            SqlCommand command = new SqlCommand("SELECT Id, Nom, Prenom, DateNaissance, Sexe, Adresse, Tel FROM Patient WHERE Nom = @n", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", nom));
             Connection.Instance.Open();
             SqlDataReader reader = command.ExecuteReader();
@@ -123,12 +168,13 @@ namespace Hopital.Classes
             if (reader.Read())
             {      
                 {
-                    p.Nom = reader.GetString(0);
-                    p.Prenom = reader.GetString(1);
-                    p.DateNaissance = reader.GetString(2);
-                    p.Sexe = reader.GetString(3);
-                    p.Adresse = reader.GetString(4);
-                    p.Tel = reader.GetString(5);
+                    p.Id = reader.GetInt32(0);
+                    p.Nom = reader.GetString(1);
+                    p.Prenom = reader.GetString(2);
+                    p.DateNaissance = reader.GetString(3);
+                    p.Sexe = reader.GetString(4);
+                    p.Adresse = reader.GetString(5);
+                    p.Tel = reader.GetString(6);
                 };
             }
             reader.Close();
@@ -144,10 +190,38 @@ namespace Hopital.Classes
             Patient p = GetPatient(nom);
             if (p.Nom == nom)
             {
-                MenuServices();
+                Console.WriteLine("Listes des services : ");
+                Console.WriteLine("--------------------");
+                foreach (Service s in GetService())
+                {
+                    Console.WriteLine(s.Id + " - "+s.Nom);
+                }
+                Console.Write("Dans quel service souhaitez-vous un rendez-vous ? : ");
+                int choixService = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Listes des medecins de ce service : ");
+                Console.WriteLine("--------------------");
+                foreach (Medecin m in GetMedecinById(choixService))
+                {
+                    Console.WriteLine($"{m.Nom}, {m.Prenom}, {m.Tel}");
+                }
+                Console.Write("Saisissez le nom ET le prénom de votre medecin : ");
+                string choixMedecin = Console.ReadLine();
+                Console.WriteLine("Date de RDV souhaitée : (JJ/MM/AAAA HH:MM)");
+                DateTime dateRDV = Convert.ToDateTime(Console.ReadLine());             
+                string CodeRDV = Guid.NewGuid().ToString();
 
+                SqlCommand command = new SqlCommand("INSERT INTO RDV (CodeRDV, Medecin, DateRDV, Service, IdPatient) VALUES(@c,@m,@d,@s,@i)", Connection.Instance);
+                command.Parameters.Add(new SqlParameter("@c", CodeRDV));
+                command.Parameters.Add(new SqlParameter("@m", choixMedecin));
+                command.Parameters.Add(new SqlParameter("@d", dateRDV));
+                command.Parameters.Add(new SqlParameter("@s", choixService));
+                command.Parameters.Add(new SqlParameter("@i", p.Id));
+                Connection.Instance.Open();
+                command.ExecuteNonQuery();
+                command.Dispose();
+                Connection.Instance.Close();
             }
-            else { AddPatient();}
+            else { AddPatient(); AddRDV(); }
             
         }
         #endregion

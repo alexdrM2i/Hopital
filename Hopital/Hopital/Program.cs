@@ -9,6 +9,7 @@ namespace Hopital
         {
             DataBase.Instance.AddRDV();
             //Menu.Accueil();
+
             Console.ReadLine();
         }
     }
