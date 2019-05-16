@@ -111,6 +111,30 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
         }
-        #endregion
+
+        
+        public static Patient GetPatient(string nom)
+        {
+            SqlCommand command = new SqlCommand("SELECT Nom, Prenom, DateNaissance, Sexe, Adresse, Tel FROM Patient WHERE Nom = @n", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@n", nom));
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            Patient p = new Patient();
+            if (reader.Read())
+            {      
+                {
+                    p.Nom = reader.GetString(0);
+                    p.Prenom = reader.GetString(1);
+                    p.DateNaissance = reader.GetString(2);
+                    p.Sexe = reader.GetString(3);
+                    p.Adresse = reader.GetString(4);
+                    p.Tel = reader.GetString(5);
+                };
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return p;
+        }
     }
 }
