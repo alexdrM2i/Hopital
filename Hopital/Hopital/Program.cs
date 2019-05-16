@@ -7,8 +7,7 @@ namespace Hopital
     {
         static void Main(string[] args)
         {
-            Medecin m = new Medecin();
-            m.Add();
+           
             Menu.Accueil();
             Console.ReadLine();
         }
