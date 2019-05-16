@@ -109,7 +109,7 @@ namespace Hopital.Classes
             command.Parameters.Add(new SqlParameter("@t", p.Tel));
             Connection.Instance.Open();
             p.Id = (int)command.ExecuteScalar();
-            command.Dispose();
+            command.Dispose(); 
             Connection.Instance.Close();
 
         }
