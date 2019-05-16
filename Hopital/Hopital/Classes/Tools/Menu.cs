@@ -62,6 +62,7 @@ namespace Hopital.Classes
                         break;
                     case 2:
                         MenuMedecinPrincipal();
+
                         break;
                     case 3:
                         break;
