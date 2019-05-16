@@ -29,6 +29,10 @@ namespace Hopital.Classes
 
         }
 
+        #region GESTTION DES CONSULTATIONS
+        #endregion
+
+        #region GESTION PARTIE MEDECIN
         static List<Specialite> listeSpecialites = new List<Specialite>();
         public static List<Specialite> GetSpecialite()
         {          
@@ -76,7 +80,9 @@ namespace Hopital.Classes
             command.Dispose();
             Connection.Instance.Close();
         }
+        #endregion
 
+        #region GESTION PARTIE PATIENT
         public static void AddPatient()
         { 
             Patient p = new Patient();
@@ -105,5 +111,6 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
         }
+        #endregion
     }
 }

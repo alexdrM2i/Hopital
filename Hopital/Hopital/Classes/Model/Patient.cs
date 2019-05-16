@@ -35,5 +35,10 @@ namespace Hopital.Classes
         public string NomMere { get => nomMere; set => nomMere = value; }
         public string NomPersPrevenir { get => nomPersPrevenir; set => nomPersPrevenir = value; }
         public string TelPersPrevenir { get => telPersPrevenir; set => telPersPrevenir = value; }
+
+        public Patient()
+        {
+        }
+       
     }
 }
