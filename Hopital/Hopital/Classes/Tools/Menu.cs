@@ -122,7 +122,7 @@ namespace Hopital.Classes
 
             {
                 case 1:
-                    DataBase.AddMedecin();
+                    DataBase.Instance.AddMedecin();
                     break;
             }
 

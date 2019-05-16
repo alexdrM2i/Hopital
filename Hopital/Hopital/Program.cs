@@ -7,8 +7,8 @@ namespace Hopital
     {
         static void Main(string[] args)
         {
-           
-            Menu.Accueil();
+            DataBase.Instance.AddRDV();
+            //Menu.Accueil();
             Console.ReadLine();
         }
     }

@@ -33,8 +33,8 @@ namespace Hopital.Classes
         #endregion
 
         #region GESTION PARTIE MEDECIN
-        static List<Specialite> listeSpecialites = new List<Specialite>();
-        public static List<Specialite> GetSpecialite()
+        List<Specialite> listeSpecialites = new List<Specialite>();
+        public List<Specialite> GetSpecialite()
         {          
             SqlCommand command = new SqlCommand("SELECT * FROM Spec", Connection.Instance);
             Connection.Instance.Open();
@@ -55,7 +55,7 @@ namespace Hopital.Classes
             return listeSpecialites;
         }
 
-        public static void AddMedecin()
+        public void AddMedecin()
         {
             Medecin m = new Medecin();
             Console.Write("Nom du medecin: ");
@@ -83,8 +83,9 @@ namespace Hopital.Classes
         #endregion
 
         #region GESTION PARTIE PATIENT
-        public static void AddPatient()
-        { 
+        public void AddPatient()
+        {
+            Console.WriteLine(Messages.TitreAjouterPatient);
             Patient p = new Patient();
             Console.Write("Nom: ");
             p.Nom = Console.ReadLine();
@@ -111,9 +112,8 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
         }
-
-        
-        public static Patient GetPatient(string nom)
+       
+        public Patient GetPatient(string nom)
         {
             SqlCommand command = new SqlCommand("SELECT Nom, Prenom, DateNaissance, Sexe, Adresse, Tel FROM Patient WHERE Nom = @n", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", nom));
@@ -135,6 +135,20 @@ namespace Hopital.Classes
             command.Dispose();
             Connection.Instance.Close();
             return p;
+        }
+
+        public void AddRDV()
+        {
+            Console.Write("Nom : ");
+            string nom = Console.ReadLine();
+            Patient p = GetPatient(nom);
+            if (p.Nom == nom)
+            {
+                MenuServices();
+
+            }
+            else { AddPatient();}
+            
         }
         #endregion
     }
