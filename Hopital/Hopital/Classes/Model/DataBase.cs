@@ -136,5 +136,6 @@ namespace Hopital.Classes
             Connection.Instance.Close();
             return p;
         }
+        #endregion
     }
 }
