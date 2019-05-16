@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace Hopital.Classes
 {
@@ -18,13 +17,17 @@ namespace Hopital.Classes
         /// </summary>
         private static void Titre()
         {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine(Messages.TitreProjet);
+            Console.WriteLine($"      {Messages.TitreProjet}         ");                         
             Console.WriteLine("----------------------------------------------------");
+            Console.ResetColor();
         }
         /// <summary>
         /// Génération du corps du Menu
         /// </summary>
+        /// 
         private static void MenuPrincipal()
         {
             Console.WriteLine(" ");
@@ -35,7 +38,6 @@ namespace Hopital.Classes
             {
                 Console.WriteLine("1 - Gestion du patient");
                 Console.WriteLine("2 - Gestion du médecin");
-                Console.WriteLine("3 - Gestion du médecin");
                 Console.WriteLine("0 - Quitter");
                 Console.WriteLine(" ");
                 Console.Write(Messages.Choix);
@@ -55,10 +57,11 @@ namespace Hopital.Classes
                 switch (choix)
                 {
                     case 1:
-                        MenuPatient();
+                        MenuPatientPrincipal();
+                       
                         break;
                     case 2:
-                        MenuMedecin();
+                        MenuMedecinPrincipal();
                         break;
                     case 3:
                         break;
@@ -85,18 +88,46 @@ namespace Hopital.Classes
         
         }
 
-        private static void MenuMedecin()
+        private static void MenuMedecinPrincipal()
         {
             Console.Clear();
             Titre();
+            Console.WriteLine(" ");
             Console.WriteLine(Messages.TitreMedecin);
+            Console.WriteLine(" ");
             Console.WriteLine($"1 - {Messages.TitreAjouterMedecin}");
             Console.WriteLine($"2 - {Messages.TitreModifierMedecin}");
         }
 
-        private static void MenuPatient()
+        private static void MenuPatientPrincipal()
         {
-            
+            Console.Clear();
+            Titre();
+            Console.WriteLine(" ");
+            Console.WriteLine($"{Messages.TitrePatients}");
+            Console.WriteLine(" ");
+            Console.WriteLine($"1 - {Messages.TitreAjouterPatient}");
+            Console.WriteLine($"2 - {Messages.TitreModifierPatient}");
+        }
+        private static void MenuMedecinSpecialite()
+        {
+            Console.Clear();
+            Titre();
+            Console.WriteLine(" ");
+            Console.WriteLine($"{Messages.TitreSpecialiteMedecin}");
+            Console.WriteLine($"1 -{Messages.TitreAjouterSpecialiteMedecin}");
+            Console.WriteLine($"2 - {Messages.TitreModifierSpecialiteMedecin}");
+
+            switch (choix)
+
+            {
+                case 1:
+                    DataBase.AddMedecin();
+                    break;
+            }
+
+
+           
         }
     }
 }

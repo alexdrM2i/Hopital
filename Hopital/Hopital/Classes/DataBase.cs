@@ -29,11 +29,13 @@ namespace Hopital.Classes
 
         }
 
-        static List<Specialite> listeSpecialites = new List<Specialite>();
+        #region GESTTION DES CONSULTATIONS
+        #endregion
 
+        #region GESTION PARTIE MEDECIN
+        static List<Specialite> listeSpecialites = new List<Specialite>();
         public static List<Specialite> GetSpecialite()
-        {
-            
+        {          
             SqlCommand command = new SqlCommand("SELECT * FROM Spec", Connection.Instance);
             Connection.Instance.Open();
             SqlDataReader reader = command.ExecuteReader();
@@ -51,7 +53,6 @@ namespace Hopital.Classes
             command.Dispose();
             Connection.Instance.Close();
             return listeSpecialites;
-
         }
 
         public static void AddMedecin()
@@ -68,29 +69,26 @@ namespace Hopital.Classes
             {
                 Console.Write(s.CodeSpec.ToString()+" "+ s.SpecialiteM+" / ");
             }
-            m.CodeSpecialite = Convert.ToInt32(Console.ReadLine());
-            // listeSpecialites.ForEach(x => Console.WriteLine(x.CodeSpec.ToString(), x.SpecialiteM));
-            
+            m.CodeSpecialite = Convert.ToInt32(Console.ReadLine());     
             SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", m.Nom));
             command.Parameters.Add(new SqlParameter("@p", m.Prenom));
             command.Parameters.Add(new SqlParameter("@t", m.Tel));
             command.Parameters.Add(new SqlParameter("@cs", m.CodeSpecialite));
-
             Connection.Instance.Open();
             m.Id = (int)command.ExecuteScalar();
             command.Dispose();
-
-
             Connection.Instance.Close();
         }
+        #endregion
 
+        #region GESTION PARTIE PATIENT
         public static void AddPatient()
         { 
             Patient p = new Patient();
             Console.Write("Nom: ");
             p.Nom = Console.ReadLine();
-            Console.Write("Prénom: ");
+            Console.Write("Prénom: ");  
             p.Prenom = Console.ReadLine();
             Console.Write("Date de naissance: ");
             p.DateNaissance = Console.ReadLine();
@@ -112,6 +110,31 @@ namespace Hopital.Classes
             command.Dispose(); 
             Connection.Instance.Close();
 
+        }
+
+        
+        public static Patient GetPatient(string nom)
+        {
+            SqlCommand command = new SqlCommand("SELECT Nom, Prenom, DateNaissance, Sexe, Adresse, Tel FROM Patient WHERE Nom = @n", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@n", nom));
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            Patient p = new Patient();
+            if (reader.Read())
+            {      
+                {
+                    p.Nom = reader.GetString(0);
+                    p.Prenom = reader.GetString(1);
+                    p.DateNaissance = reader.GetString(2);
+                    p.Sexe = reader.GetString(3);
+                    p.Adresse = reader.GetString(4);
+                    p.Tel = reader.GetString(5);
+                };
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return p;
         }
     }
 }
