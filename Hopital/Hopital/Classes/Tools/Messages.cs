@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Hopital.Classes
 {
-    public static class Messages
+    public static class Messages 
     {
         #region MessagesGénérals
         public static string TitreProjet = "Bienvenue dans la gestion HOPITAL M2I";
@@ -13,7 +13,8 @@ namespace Hopital.Classes
         public static string Choix = "Veuillez indiquer votre choix : ";
         public static string NotAString = "Veuillez indiquer une chaine de caractère valide ";
         public static string Sortie = "Voulez-vous vraiment quitter le programme O / N ?";
-        #endregion
+        public static string RdvAjoute = "Votre rendez-vous à bien été ajouté";
+        #endregion 
 
         #region MessagesPartiesMedecin
         public static string TitreMedecin = "Gestion du médecin";

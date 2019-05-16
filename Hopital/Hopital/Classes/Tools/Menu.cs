@@ -62,6 +62,7 @@ namespace Hopital.Classes
                         break;
                     case 2:
                         MenuMedecinPrincipal();
+
                         break;
                     case 3:
                         break;
@@ -122,7 +123,7 @@ namespace Hopital.Classes
 
             {
                 case 1:
-                    DataBase.AddMedecin();
+                    DataBase.Instance.AddMedecin();
                     break;
             }
 
