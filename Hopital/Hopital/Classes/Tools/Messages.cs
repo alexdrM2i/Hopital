@@ -13,7 +13,7 @@ namespace Hopital.Classes
         public static string Choix = "Veuillez indiquer votre choix : ";
         public static string NotAString = "Veuillez indiquer une chaine de caractère valide ";
         public static string Sortie = "Voulez-vous vraiment quitter le programme O / N ?";
-        public static string RdvAjoute = "Votre rendez-vous à bien été ajouté";
+        public static string RdvAjoute = "-- Votre rendez-vous à bien été ajouté --";
         #endregion 
 
         #region MessagesPartiesMedecin
