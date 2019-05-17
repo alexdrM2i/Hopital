@@ -38,7 +38,7 @@ namespace Hopital.Classes
         public void AddSpecialite()
         {
             Specialite spec = new Specialite();
-           
+
 
             bool res = false;
             List<Specialite> getSpec = GetSpecialite();
@@ -70,16 +70,16 @@ namespace Hopital.Classes
             while (res == true);
 
 
-           // getSpec.FindLast(x => x.CodeSpec);
-           
-                SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
-                command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
-                command.Parameters.Add(new SqlParameter("@s", spec.CodeSpec));
-                Connection.Instance.Open();
-                spec.Id = (int)command.ExecuteScalar();
-                command.Dispose();
-                Connection.Instance.Close();
-          
+          //  getSpec.FindLast(x => x.CodeSpec);
+
+            SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
+            command.Parameters.Add(new SqlParameter("@s", spec.CodeSpec));
+            Connection.Instance.Open();
+            spec.Id = (int)command.ExecuteScalar();
+            command.Dispose();
+            Connection.Instance.Close();
+
 
         }
 
