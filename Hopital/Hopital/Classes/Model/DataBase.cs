@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading;
 
 namespace Hopital.Classes
 {
@@ -96,6 +97,7 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
             Messages.AfficherMessageInsertOk(Messages.InsertOk);
+            
 
         }
 

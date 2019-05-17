@@ -203,8 +203,9 @@ namespace Hopital.Classes
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" ");
             Console.WriteLine($"{Messages.TitreSpecialiteMedecin}");
-            Console.WriteLine($"1 -{Messages.TitreAjouterSpecialiteMedecin}");
+            Console.WriteLine($"1 - {Messages.TitreAjouterSpecialiteMedecin}");
             Console.WriteLine($"2 - {Messages.TitreModifierSpecialiteMedecin}");
+            Console.WriteLine($"0 - {Messages.RetourMenuPrincipalMedecin}");
 
             try
             {
@@ -224,6 +225,9 @@ namespace Hopital.Classes
                     break;
                 case 2:
                     //DataBase.Instance.UpdateSpecialite();
+                    break;
+                case 0:
+                    MenuMedecinPrincipal();
                     break;
 
             }
