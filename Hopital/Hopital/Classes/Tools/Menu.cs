@@ -101,7 +101,6 @@ namespace Hopital.Classes
             Console.WriteLine($"1 - {Messages.TitreAjouterMedecin}");
             Console.WriteLine($"2 - {Messages.TitreModifierMedecin}");
             Console.WriteLine($"3 - {Messages.TitreAjouterSpecialiteMedecin}");
-            Console.WriteLine($"4 - {Messages.TitreModifierSpecialiteMedecin}");
             Console.WriteLine($"0 - {Messages.RetourMenuPrincipal}");
 
             do
@@ -122,11 +121,25 @@ namespace Hopital.Classes
                         DataBase.Instance.AddMedecin();
                         break;
                     case 2:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        DataBase.Instance.UpdateMedecin();
                         break;
                     case 3:
                         Console.Clear();
                         MenuMedecinSpecialite();
+                        Console.Write("Tapez 1 pour menu Medecin - Tapez 2 pour menu spécialité");
+                        int choixM = Convert.ToInt32(Console.ReadLine());
+                        switch (choixM)
+                        {
+                            case 1:
+                                MenuMedecinPrincipal();
+                                break;
+                            case 2:
+                                MenuMedecinSpecialite();
+                                break;
+                        }
                         break;
+                 
                     case 0:
                         Accueil();
                         break;
@@ -203,8 +216,9 @@ namespace Hopital.Classes
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" ");
             Console.WriteLine($"{Messages.TitreSpecialiteMedecin}");
-            Console.WriteLine($"1 - {Messages.TitreAjouterSpecialiteMedecin}");
-            Console.WriteLine($"2 - {Messages.TitreModifierSpecialiteMedecin}");
+            Console.WriteLine($"1 - {Messages.TitreListerSpecialiteMedecin}");
+            Console.WriteLine($"2 - {Messages.TitreAjouterSpecialiteMedecin}");
+          
             Console.WriteLine($"0 - {Messages.RetourMenuPrincipalMedecin}");
 
             try
@@ -221,10 +235,11 @@ namespace Hopital.Classes
 
             {
                 case 1:
-                    DataBase.Instance.AddSpecialite();
+                    DataBase.Instance.ListAllSpec();
                     break;
                 case 2:
-                    //DataBase.Instance.UpdateSpecialite();
+                    DataBase.Instance.AddSpecialite();
+                    
                     break;
                 case 0:
                     MenuMedecinPrincipal();

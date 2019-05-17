@@ -1,6 +1,5 @@
 ﻿using Hopital.Classes;
 using System;
-using System.Text.RegularExpressions;
 
 namespace Hopital
 {

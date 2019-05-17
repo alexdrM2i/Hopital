@@ -11,6 +11,7 @@ namespace Hopital.Classes
     {
         private static DataBase _instance = null;
         private static object _lock = new object();
+        private static List<Specialite> _getSpec = null;
 
         public static DataBase Instance
         {
@@ -36,52 +37,67 @@ namespace Hopital.Classes
 
         #region GESTION PARTIE MEDECIN
 
-        public void AddSpecialite()
+        /// <summary>
+        /// Liste la totalité des spécificités
+        /// </summary>
+        /// <returns></returns>
+        public List<Specialite> ListAllSpec()
         {
-            Specialite spec = new Specialite();
-
-            bool res = false;
-            List<Specialite> getSpec = GetSpecialite();
+            _getSpec = new List<Specialite>();
+            _getSpec = GetSpecialite();
 
             Console.WriteLine(" ");
             Console.WriteLine("---------------------------------------------------------------------------------------");
             Console.WriteLine("                  AFFICHAGE DE LA LISTE DES SPECIALITES                     ");
             Console.WriteLine(" --------------------------------------------------------------------------------------");
 
-            getSpec.ForEach(x =>
-            Console.WriteLine($"Id : {x.Id}           Spécilaité : {x.SpecialiteM}           Code spécialité : {x.CodeSpec}")
-            );
+            _getSpec.ForEach(x =>
+             Console.WriteLine($"Id : {x.Id}     Code spécialité : {x.CodeSpec}   Spécialité : {x.SpecialiteM}")
+             );
+
+            return _getSpec;
+        }
+        /// <summary>
+        /// Ajoute une spécificité en base
+        /// </summary>
+        public void AddSpecialite()
+        {
+            Specialite spec = new Specialite();
+
+            bool res = false;
+            _getSpec = new List<Specialite>();
+            _getSpec = ListAllSpec();
 
             Console.WriteLine($"{Messages.TitreAjouterSpecialiteMedecin}");
-            Console.Write("Nouvelle spécialité : ");
+            Console.Write($"{ Messages.TitreNouvelleSpecialiteMedecin}");
             spec.SpecialiteM = Console.ReadLine();
 
             do
             {
-                res = getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
-                if(res)
+                res = _getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
+                if (res)
                 {
                     Messages.AfficherMessageErreur("Cette spécialité existe déjà");
                     Console.WriteLine(" ");
-                    Console.Write("Nouvelle spécialité : ");
+                    Console.Write($"{ Messages.TitreNouvelleSpecialiteMedecin} :");
                     spec.SpecialiteM = Console.ReadLine();
                 }
             }
             while (res);
 
-            int max = getSpec[0].CodeSpec;
+            int max = _getSpec[0].CodeSpec;
 
-            for (int i = 1; i < getSpec.Count; i++)
+            for (int i = 1; i < _getSpec.Count; i++)
             {
-                if(max <= getSpec[i].CodeSpec)
+                if (max <= _getSpec[i].CodeSpec)
                 {
-                    max = getSpec[i].CodeSpec;
+                    max = _getSpec[i].CodeSpec;
                 }
             }
             max = max + 1;
 
             SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
-            command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
+            command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM[0].ToString().ToUpper() + spec.SpecialiteM.Substring(1).ToLower()));
             command.Parameters.Add(new SqlParameter("@c", max));
             Connection.Instance.Open();
             spec.Id = (int)command.ExecuteScalar();
@@ -89,8 +105,6 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
             Messages.AfficherMessageInsertOk(Messages.InsertOk);
-            
-
         }
 
         List<Specialite> listeSpecialites = new List<Specialite>();
@@ -139,6 +153,89 @@ namespace Hopital.Classes
             return listeMedecins;
         }
 
+        public List<Medecin> GetMedecinByName(string name)
+        {
+            SqlCommand command = new SqlCommand("SELECT m.Id, m.Nom, m.Prenom FROM Medecin as m where m.Nom= @name", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@name", name));
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Medecin m = new Medecin()
+                {
+                    Id = reader.GetInt32(0),
+                    Nom = reader.GetString(1),
+                    Prenom = reader.GetString(2),
+
+                };
+                listeMedecins.Add(m);
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return listeMedecins;
+        }
+
+        public void UpdateMedecin()
+        {
+            string SpecM = string.Empty;
+            string nomM = string.Empty;
+            int idSpec = 0;
+            int idM = 0;
+
+            do
+            {
+                Console.Write("Veuillez saisir la spécialité du médecin : ");
+                SpecM = Console.ReadLine();
+
+                listeSpecialites = new List<Specialite>();
+
+                listeSpecialites = GetSpecialite();
+               
+                listeSpecialites.ForEach(x =>
+                {
+                    if (x.SpecialiteM.ToLower() == SpecM.ToLower())
+                    {
+                        idSpec = x.Id;
+                    }
+                });
+                if(listeSpecialites.Count == 0)
+                {
+                    Console.WriteLine("La specialité n'existe pas");
+                }
+            }
+            while (listeSpecialites.Count == 0);
+
+            do
+            {
+                Console.Write("Veuillez saisir le nom du médecin : ");
+                nomM = Console.ReadLine();
+                listeMedecins = new List<Medecin>();
+                listeMedecins = GetMedecinByName(nomM);
+                listeMedecins.ForEach(x =>
+                {
+                    if (x.Nom.ToLower() == nomM.ToLower())
+                    {
+                        idM = x.Id;
+                    }
+                });
+                if (listeMedecins.Count == 0)
+                {
+                    Console.WriteLine("Aucun médecin sous ce nom");
+                }
+            }
+            while (listeMedecins.Count == 0);
+
+            listeMedecins = GetMedecinById(idM);
+
+            listeMedecins.ForEach(x => Console.WriteLine(x.ToString()));
+           
+              
+
+          
+        
+        }
+
         public void AddMedecin()
         {
             Medecin m = new Medecin();
@@ -162,12 +259,12 @@ namespace Hopital.Classes
             else if (m.CodeSpecialite == 5) m.IdService = 4;
             else if (m.CodeSpecialite == 6) m.IdService = 6;
             else if (m.CodeSpecialite == 7) m.IdService = 3;
-            SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite, IdService) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs)", Connection.Instance);
+            SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite, IdService) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs,@i)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", m.Nom));
             command.Parameters.Add(new SqlParameter("@p", m.Prenom));
             command.Parameters.Add(new SqlParameter("@t", m.Tel));
             command.Parameters.Add(new SqlParameter("@cs", m.CodeSpecialite));
-            command.Parameters.Add(new SqlParameter("@cs", m.IdService));
+            command.Parameters.Add(new SqlParameter("@i", m.IdService));
             Connection.Instance.Open();
             m.Id = (int)command.ExecuteScalar();
             command.Dispose();
@@ -249,9 +346,9 @@ namespace Hopital.Classes
             }
             else
             {
-                command.Parameters.Add(new SqlParameter("@si", null));
-                command.Parameters.Add(new SqlParameter("@np", null));
-                command.Parameters.Add(new SqlParameter("@nm", null));
+                command.Parameters.Add(new SqlParameter("@si", ""));
+                command.Parameters.Add(new SqlParameter("@np", ""));
+                command.Parameters.Add(new SqlParameter("@nm", ""));
             }
             Connection.Instance.Open();
             p.Id = (int)command.ExecuteScalar();
