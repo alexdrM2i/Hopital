@@ -95,12 +95,20 @@ namespace Hopital.Classes
                 Console.Write(s.CodeSpec.ToString() + " " + s.SpecialiteM + " / ");
             }
             m.CodeSpecialite = Convert.ToInt32(Console.ReadLine());
-            SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs)", Connection.Instance);
+            //string c = GetSpecialite().Find((x) => x.CodeSpec == m.CodeSpecialite).SpecialiteM;
+            if (m.CodeSpecialite == 1) m.IdService = 2;
+            else if (m.CodeSpecialite == 2) m.IdService = 1;
+            else if (m.CodeSpecialite == 3) m.IdService = 2;
+            else if (m.CodeSpecialite == 4) m.IdService = 7;
+            else if (m.CodeSpecialite == 5) m.IdService = 4;
+            else if (m.CodeSpecialite == 6) m.IdService = 6;
+            else if (m.CodeSpecialite == 7) m.IdService = 3;
+            SqlCommand command = new SqlCommand("INSERT INTO Medecin (Nom, Prenom, Tel, CodeSpecialite, IdService) OUTPUT INSERTED.ID VALUES(@n,@p,@t,@cs)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", m.Nom));
             command.Parameters.Add(new SqlParameter("@p", m.Prenom));
             command.Parameters.Add(new SqlParameter("@t", m.Tel));
             command.Parameters.Add(new SqlParameter("@cs", m.CodeSpecialite));
-
+            command.Parameters.Add(new SqlParameter("@cs", m.IdService));
             Connection.Instance.Open();
             m.Id = (int)command.ExecuteScalar();
             command.Dispose();
@@ -140,24 +148,55 @@ namespace Hopital.Classes
             p.Prenom = Console.ReadLine();
             Console.Write("Date de naissance: ");
             p.DateNaissance = Console.ReadLine();
-            Console.Write("Sexe: F/M ");
+            Console.Write("Sexe ? F/H :");
             p.Sexe = Console.ReadLine();
             Console.Write("Adresse: ");
             p.Adresse = Console.ReadLine();
             Console.Write("Numéro de téléphone: ");
             p.Tel = Console.ReadLine();
-            SqlCommand command = new SqlCommand("INSERT INTO Patient (Nom, Prenom, DateNaissance, Sexe, Adresse, Tel) OUTPUT INSERTED.ID VALUES(@n,@p,@d,@s,@a,@t)", Connection.Instance);
+            Console.Write("Numéro de Sécurité Sociale : ");
+            p.Assurance = Console.ReadLine();
+            Console.Write("Nom de la personne à prevenir en cas d'urgence : ");
+            p.NomPersPrevenir = Console.ReadLine();
+            Console.WriteLine("Numéro de téléphone de la personne à prevenir : ");
+            p.TelPersPrevenir = Console.ReadLine();
+
+            SqlCommand command = new SqlCommand("INSERT INTO Patient (Nom, Prenom, DateNaissance, Sexe, Adresse, Tel, Assurance, NomPersPrevenir, TelPersPrevenir, Situation, NomPere, NomMere) OUTPUT INSERTED.ID VALUES(@n,@p,@d,@s,@ad,@t,@ass,@nps,@tps,@si,@np,@nm)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@n", p.Nom));
             command.Parameters.Add(new SqlParameter("@p", p.Prenom));
             command.Parameters.Add(new SqlParameter("@d", p.DateNaissance));
             command.Parameters.Add(new SqlParameter("@s", p.Sexe));
-            command.Parameters.Add(new SqlParameter("@a", p.Adresse));
+            command.Parameters.Add(new SqlParameter("@ad", p.Adresse));
             command.Parameters.Add(new SqlParameter("@t", p.Tel));
+            command.Parameters.Add(new SqlParameter("@ass", p.Assurance));
+            command.Parameters.Add(new SqlParameter("@nps", p.NomPersPrevenir));
+            command.Parameters.Add(new SqlParameter("@tps", p.TelPersPrevenir));
+
+            Console.WriteLine("Voulez-vous renseigner votre situation ainsi que les noms de vos parents ? O/N : ");
+            string input = Console.ReadLine().ToLower();
+            if (input == "o")
+            {
+                Console.WriteLine("Situation familiale : ");
+                p.Situation = Console.ReadLine();
+                Console.WriteLine("Nom de votre mère : ");
+                p.NomMere = Console.ReadLine();
+                Console.WriteLine("Nom de votre père : ");
+                p.NomPere = Console.ReadLine();
+
+                command.Parameters.Add(new SqlParameter("@si", p.Situation));
+                command.Parameters.Add(new SqlParameter("@np", p.NomPere));
+                command.Parameters.Add(new SqlParameter("@nm", p.NomMere));
+            }
+            else
+            {
+                command.Parameters.Add(new SqlParameter("@si", null));
+                command.Parameters.Add(new SqlParameter("@np", null));
+                command.Parameters.Add(new SqlParameter("@nm", null));
+            }
             Connection.Instance.Open();
             p.Id = (int)command.ExecuteScalar();
-            command.Dispose();
+            command.Dispose(); 
             Connection.Instance.Close();
-
         }
 
         public Patient GetPatient(string nom)
@@ -205,11 +244,8 @@ namespace Hopital.Classes
                 string nomService = null;
                 listeServices.ForEach(x =>
                 {
-
                     if (x.Id == choixService)
-                    {
-                        nomService = x.Nom;
-                    }
+                    nomService = x.Nom;
                 });
                 foreach (Medecin m in GetMedecinById(choixService))
                 {
@@ -239,7 +275,6 @@ namespace Hopital.Classes
                 Console.WriteLine($"Code du rendez-vous: {CodeRDV},\n Service: {nomService}, Nom du medecin: {nomMedecin}, Date : {dateRDV}");
             }
             else { AddPatient(); AddRDV(); }
-
         }
 
         List<RDV> listeRDV = new List<RDV>();
@@ -263,9 +298,6 @@ namespace Hopital.Classes
                 reader.Close();
                 command.Dispose();
                 Connection.Instance.Close();
-
-
-
                 return listeRDV;
             }
             #endregion
