@@ -56,30 +56,46 @@ namespace Hopital.Classes
             Console.Write("Nouvelle spécialité : ");
             spec.SpecialiteM = Console.ReadLine();
 
-            res = getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
-            // getSpec.
+            
+            
 
 
             do
             {
-                Messages.AfficherMessageErreur("Cette spécialité existe déjà");
-                Console.WriteLine(" ");
-                Console.Write("Nouvelle spécialité : ");
-                spec.SpecialiteM = Console.ReadLine();
+                res = getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
+                if(res)
+                {
+                    Messages.AfficherMessageErreur("Cette spécialité existe déjà");
+                    Console.WriteLine(" ");
+                    Console.Write("Nouvelle spécialité : ");
+                    spec.SpecialiteM = Console.ReadLine();
+                }
+                
             }
-            while (res == true);
+            while (res);
 
+            int max = getSpec[0].CodeSpec;
 
-          //  getSpec.FindLast(x => x.CodeSpec);
+            for (int i = 1; i < getSpec.Count; i++)
+            {
+                if(max <= getSpec[i].CodeSpec)
+                {
+                    max = getSpec[i].CodeSpec;
+                }
+            }
+            max = max + 1;
+         
+        
 
             SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
-            command.Parameters.Add(new SqlParameter("@s", spec.CodeSpec));
+            command.Parameters.Add(new SqlParameter("@c", max));
             Connection.Instance.Open();
             spec.Id = (int)command.ExecuteScalar();
             command.Dispose();
             Connection.Instance.Close();
 
+            Messages.AfficherMessageInsertOk(Messages.InsertOk);
 
         }
 
