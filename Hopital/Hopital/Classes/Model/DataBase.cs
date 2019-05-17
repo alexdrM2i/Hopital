@@ -39,7 +39,6 @@ namespace Hopital.Classes
         {
             Specialite spec = new Specialite();
 
-
             bool res = false;
             List<Specialite> getSpec = GetSpecialite();
 
@@ -56,10 +55,6 @@ namespace Hopital.Classes
             Console.Write("Nouvelle spécialité : ");
             spec.SpecialiteM = Console.ReadLine();
 
-            
-            
-
-
             do
             {
                 res = getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
@@ -70,7 +65,6 @@ namespace Hopital.Classes
                     Console.Write("Nouvelle spécialité : ");
                     spec.SpecialiteM = Console.ReadLine();
                 }
-                
             }
             while (res);
 
@@ -84,8 +78,6 @@ namespace Hopital.Classes
                 }
             }
             max = max + 1;
-         
-        
 
             SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
             command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
@@ -96,7 +88,6 @@ namespace Hopital.Classes
             Connection.Instance.Close();
 
             Messages.AfficherMessageInsertOk(Messages.InsertOk);
-
         }
 
         List<Specialite> listeSpecialites = new List<Specialite>();
