@@ -310,8 +310,8 @@ namespace Hopital.Classes
                     Console.WriteLine($"RDV n°: {r.Id} - Date: {r.DateRDV} avec Dr {r.Medecin} en {r.Service}");
                 }
                 return listeRDV;
-            }
-            #endregion
+            }           
         }
+        #endregion
     }
 }
