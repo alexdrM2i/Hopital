@@ -34,6 +34,55 @@ namespace Hopital.Classes
         #endregion
 
         #region GESTION PARTIE MEDECIN
+
+        public void AddSpecialite()
+        {
+            Specialite spec = new Specialite();
+           
+
+            bool res = false;
+            List<Specialite> getSpec = GetSpecialite();
+
+            Console.WriteLine(" ");
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+            Console.WriteLine("                  AFFICHAGE DE LA LISTE DES SPECIALITES                     ");
+            Console.WriteLine(" --------------------------------------------------------------------------------------");
+
+            getSpec.ForEach(x =>
+            Console.WriteLine($"Id : {x.Id}           Spécilaité : {x.SpecialiteM}           Code spécialité : {x.CodeSpec}")
+            );
+
+            Console.WriteLine($"{Messages.TitreAjouterSpecialiteMedecin}");
+            Console.Write("Nouvelle spécialité : ");
+            spec.SpecialiteM = Console.ReadLine();
+
+            res = getSpec.Exists(x => x.SpecialiteM.ToLower().Contains(spec.SpecialiteM.ToLower()));
+            // getSpec.
+
+
+            do
+            {
+                Messages.AfficherMessageErreur("Cette spécialité existe déjà");
+                Console.WriteLine(" ");
+                Console.Write("Nouvelle spécialité : ");
+                spec.SpecialiteM = Console.ReadLine();
+            }
+            while (res == true);
+
+
+           // getSpec.FindLast(x => x.CodeSpec);
+           
+                SqlCommand command = new SqlCommand("INSERT INTO Spec (Specialite, CodeSpec) OUTPUT INSERTED.Id VALUES (@s, @c)", Connection.Instance);
+                command.Parameters.Add(new SqlParameter("@s", spec.SpecialiteM));
+                command.Parameters.Add(new SqlParameter("@s", spec.CodeSpec));
+                Connection.Instance.Open();
+                spec.Id = (int)command.ExecuteScalar();
+                command.Dispose();
+                Connection.Instance.Close();
+          
+
+        }
+
         List<Specialite> listeSpecialites = new List<Specialite>();
         public List<Specialite> GetSpecialite()
         {
@@ -83,13 +132,13 @@ namespace Hopital.Classes
         public void AddMedecin()
         {
             Medecin m = new Medecin();
-            Console.Write("Nom du medecin: ");
+            Console.Write($"{Messages.MedecinNom}");
             m.Nom = Console.ReadLine();
-            Console.Write("Prénom du medecin: ");
+            Console.Write($"{Messages.MedecinPrenom}");
             m.Prenom = Console.ReadLine();
-            Console.Write("Téléphone du medecin: ");
+            Console.Write($"{Messages.MedecinTelephone}");
             m.Tel = Console.ReadLine();
-            Console.Write("Quelle spécialité ? : ");
+            Console.Write($"{Messages.MedecinSpecialite}");
             foreach (Specialite s in GetSpecialite())
             {
                 Console.Write(s.CodeSpec.ToString() + " " + s.SpecialiteM + " / ");
@@ -140,19 +189,20 @@ namespace Hopital.Classes
         #region GESTION PARTIE PATIENT
         public void AddPatient()
         {
-            Console.WriteLine("--- Enregistrement patient ---");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(Messages.TitreAjouterPatient);
             Patient p = new Patient();
-            Console.Write("Nom: ");
+            Console.Write($"{Messages.PatientNom}");
             p.Nom = Console.ReadLine();
-            Console.Write("Prénom: ");
+            Console.Write($"{Messages.PatientPrenom}");
             p.Prenom = Console.ReadLine();
-            Console.Write("Date de naissance: ");
+            Console.Write($"{Messages.PatientDateNaissance}");
             p.DateNaissance = Console.ReadLine();
-            Console.Write("Sexe ? F/H :");
+            Console.Write($"{Messages.PatientSexe} ");
             p.Sexe = Console.ReadLine();
-            Console.Write("Adresse: ");
+            Console.Write($"{Messages.PatientAdresse}");
             p.Adresse = Console.ReadLine();
-            Console.Write("Numéro de téléphone: ");
+            Console.Write($"{Messages.PatientTel} ");
             p.Tel = Console.ReadLine();
             Console.Write("Numéro de Sécurité Sociale : ");
             p.Assurance = Console.ReadLine();
@@ -189,13 +239,13 @@ namespace Hopital.Classes
             }
             else
             {
-                command.Parameters.Add(new SqlParameter("@si", "non renseigné"));
-                command.Parameters.Add(new SqlParameter("@np", "non renseigné"));
-                command.Parameters.Add(new SqlParameter("@nm", "non renseigné"));
+                command.Parameters.Add(new SqlParameter("@si", null));
+                command.Parameters.Add(new SqlParameter("@np", null));
+                command.Parameters.Add(new SqlParameter("@nm", null));
             }
             Connection.Instance.Open();
             p.Id = (int)command.ExecuteScalar();
-            command.Dispose(); 
+            command.Dispose();
             Connection.Instance.Close();
         }
 
@@ -221,14 +271,11 @@ namespace Hopital.Classes
             reader.Close();
             command.Dispose();
             Connection.Instance.Close();
-            Console.WriteLine($"Patient n° {p.Id} : {p.Nom} {p.Prenom} - Né(e) le: {p.DateNaissance}\nCoordonnées: {p.Adresse}, {p.Tel}");
-            Console.WriteLine("");
             return p;
         }
 
         public void AddRDV()
         {
-            Console.WriteLine("--- Prise de rendez-vous ---");
             Console.Write("Nom : ");
             string nom = Console.ReadLine();
             Patient p = GetPatient(nom);
@@ -248,11 +295,11 @@ namespace Hopital.Classes
                 listeServices.ForEach(x =>
                 {
                     if (x.Id == choixService)
-                    nomService = x.Nom;
+                        nomService = x.Nom;
                 });
                 foreach (Medecin m in GetMedecinById(choixService))
                 {
-                    Console.WriteLine($"Identifiant: {m.Id} - {m.Nom} {m.Prenom}, {m.Tel}");
+                    Console.WriteLine($"{m.Id} - {m.Nom}, {m.Prenom}, {m.Tel}");
                 }
                 Console.Write("Saisissez l' identifiant du medecin : ");
                 int choixMedecin = Convert.ToInt32(Console.ReadLine());
@@ -275,18 +322,16 @@ namespace Hopital.Classes
                 command.Dispose();
                 Connection.Instance.Close();
                 Console.WriteLine(Messages.RdvAjoute);
-                Console.WriteLine($"Code du rendez-vous: {CodeRDV},\nService: {nomService}, Nom du medecin: {nomMedecin}, Date : {dateRDV}");
+                Console.WriteLine($"Code du rendez-vous: {CodeRDV},\n Service: {nomService}, Nom du medecin: {nomMedecin}, Date : {dateRDV}");
             }
             else { AddPatient(); AddRDV(); }
         }
 
         List<RDV> listeRDV = new List<RDV>();
-        public List<RDV> GetRdvByIdPatient()
+        public List<RDV> GetRdvByIdPatient(int id)
         {
             {
-                Console.Write("Entrer le numéro du patient pour voir ses rendez-vous: ");
-                int id = Convert.ToInt32(Console.ReadLine());
-                SqlCommand command = new SqlCommand("SELECT Id, Medecin, DateRDV, Service FROM RDV where IdPatient = @id", Connection.Instance);
+                SqlCommand command = new SqlCommand("SELECT Medecin, DateRDV, Service FROM RDV where IdPatient = @id", Connection.Instance);
                 command.Parameters.Add(new SqlParameter("@id", id));
                 Connection.Instance.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -294,24 +339,18 @@ namespace Hopital.Classes
                 {
                     RDV r = new RDV()
                     {
-                        Id = reader.GetInt32(0),
-                        Medecin = reader.GetString(1),
-                        DateRDV = reader.GetDateTime(2),
-                        Service = reader.GetString(3)
+                        Medecin = reader.GetString(0),
+                        DateRDV = reader.GetDateTime(1),
+                        Service = reader.GetString(2)
                     };
                     listeRDV.Add(r);
                 }
                 reader.Close();
                 command.Dispose();
                 Connection.Instance.Close();
-                Console.WriteLine("--- Liste des rendez-vous ---");
-                foreach (RDV r in listeRDV)
-                {
-                    Console.WriteLine($"RDV n°: {r.Id} - Date: {r.DateRDV} avec Dr {r.Medecin} en {r.Service}");
-                }
                 return listeRDV;
-            }           
+            }
+            #endregion
         }
-        #endregion
     }
 }

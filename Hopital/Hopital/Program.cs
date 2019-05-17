@@ -1,5 +1,6 @@
 ﻿using Hopital.Classes;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Hopital
 {
@@ -7,12 +8,7 @@ namespace Hopital
     {
         static void Main(string[] args)
         {
-            Console.Write("Quel est votre nom ? : ");
-            string nom = Console.ReadLine();
-            DataBase.Instance.GetPatient(nom);
-            DataBase.Instance.GetRdvByIdPatient();
-            //Menu.Accueil();
-
+            Menu.Accueil();
             Console.ReadLine();
         }
     }
