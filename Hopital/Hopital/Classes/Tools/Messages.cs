@@ -15,6 +15,7 @@ namespace Hopital.Classes
         public static string Sortie = "Voulez-vous vraiment quitter le programme O / N ?";
         public static string RdvAjoute = "Votre rendez-vous à bien été ajouté";
         public static string RetourMenuPrincipal = "Retour au menu principal";
+        public static string RetourMenuPrincipalMedecin = "Retour au menu principal du médecin";
         public static string NoFunction = "La fonction demandée n'existe pas.";
         public static string ClearConsole = "Nettoyage de la console";
         public static string GestionHospitalisation = "Gestion de l'hospitalisation";
