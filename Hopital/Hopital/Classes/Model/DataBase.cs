@@ -32,7 +32,83 @@ namespace Hopital.Classes
 
         }
 
-        #region GESTTION DES CONSULTATIONS
+        #region GESTION DES CONSULTATIONS
+
+        public void UpdateTypeConsultation(string value)
+        {
+            TypeConsultation tp = new TypeConsultation();
+            SqlCommand command = null;
+            string type = string.Empty;
+            decimal prixConsultation = 0.00M;
+            int choix = 0;
+            switch (value)
+            {
+                case "Add":
+                   
+                    try
+                    {
+                        Console.Write("Combien de Type de consultation voulez vous insérer ? :");
+                       choix = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("pas un chiffre");
+                    }
+
+                    for(int i = 0; i < choix; i++)
+                    {
+                        Console.Write("Type de consultation :");
+                        type = Console.ReadLine();
+                        Console.Write("Prix de la consultation :");
+                        prixConsultation = Convert.ToDecimal(Console.ReadLine());
+                        command = new SqlCommand("INSERT INTO TypeConsultation (Type, Prix) OUTPUT INSERTED.ID VALUES(@t,@p)", Connection.Instance);
+                        command.Parameters.Add(new SqlParameter("@t", type));
+                        command.Parameters.Add(new SqlParameter("@p", prixConsultation));
+                    }
+
+                    
+                    break;
+
+            }
+            Connection.Instance.Open();
+            if (Equals(value, "Add")) tp.Id = (int)command.ExecuteScalar();
+            command.Dispose();
+            Connection.Instance.Close();
+        }
+
+
+        public List<TypeConsultation> GetTypeConsultation(string typeConsultation)
+        {
+            List<TypeConsultation> ListTypeConsultation = new List<TypeConsultation>();
+            SqlCommand command;
+            if (Equals(typeConsultation, string.Empty))
+            {
+                command = new SqlCommand("SELECT * FROM TypeConsultation", Connection.Instance);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM TypeConsultation WHERE Type = @t", Connection.Instance);
+                command.Parameters.Add(new SqlParameter("@t", typeConsultation));
+            }
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                TypeConsultation tp = new TypeConsultation
+                {
+                    Id = reader.GetInt32(0),
+                    Type = reader.GetString(1),
+                    Prix = reader.GetDecimal(2)
+                };
+                ListTypeConsultation.Add(tp);
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return ListTypeConsultation;
+        }
+
+
         #endregion
 
         #region GESTION PARTIE MEDECIN
@@ -191,7 +267,7 @@ namespace Hopital.Classes
                 listeSpecialites = new List<Specialite>();
 
                 listeSpecialites = GetSpecialite();
-               
+
                 listeSpecialites.ForEach(x =>
                 {
                     if (x.SpecialiteM.ToLower() == SpecM.ToLower())
@@ -199,7 +275,7 @@ namespace Hopital.Classes
                         idSpec = x.Id;
                     }
                 });
-                if(listeSpecialites.Count == 0)
+                if (listeSpecialites.Count == 0)
                 {
                     Console.WriteLine("La specialité n'existe pas");
                 }
@@ -229,11 +305,7 @@ namespace Hopital.Classes
             listeMedecins = GetMedecinById(idM);
 
             listeMedecins.ForEach(x => Console.WriteLine(x.ToString()));
-           
-              
 
-          
-        
         }
 
         public void AddMedecin()
