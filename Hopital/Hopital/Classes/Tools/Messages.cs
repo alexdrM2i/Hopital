@@ -46,7 +46,7 @@ namespace Hopital.Classes
         public static string PatientNom = "Nom du patient :";
         public static string PatientPrenom = "Prénom du patient :";
         public static string PatientDateNaissance = "Date de naissance :";
-        public static string PatientSexe = "Sexe: F/M :";
+        public static string PatientSexe = "Sexe: F/H :";
         public static string PatientAdresse = "Adresse complète :";
         public static string PatientSituation = "Situation :";
         public static string PatientAssurance = "Assurance :";

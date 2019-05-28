@@ -257,9 +257,9 @@ namespace Hopital.Classes
             }
             else
             {
-                command.Parameters.Add(new SqlParameter("@si", null));
-                command.Parameters.Add(new SqlParameter("@np", null));
-                command.Parameters.Add(new SqlParameter("@nm", null));
+                command.Parameters.Add(new SqlParameter("@si", "non renseigné"));
+                command.Parameters.Add(new SqlParameter("@np", "non renseigné"));
+                command.Parameters.Add(new SqlParameter("@nm", "non renseigné"));
             }
             Connection.Instance.Open();
             p.Id = (int)command.ExecuteScalar();
