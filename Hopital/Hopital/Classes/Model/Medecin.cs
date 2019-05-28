@@ -25,7 +25,10 @@ namespace Hopital.Classes
             
         }
 
-
+        public override string ToString()
+        {
+            return $"{Id} - {Nom} - {Prenom} - {Tel}";
+        }
     }
     
 }
