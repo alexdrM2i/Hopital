@@ -32,31 +32,58 @@ namespace Hopital.Classes
 
         }
 
-        #region GESTTION DES CONSULTATIONS
+        #region GESTION DES CONSULTATIONS
 
-        public void AddTypeConsultation()
+        public void UpdateTypeConsultation(string value)
         {
             TypeConsultation tp = new TypeConsultation();
-            Console.Write("Type de consultation :");
-            string type = Console.ReadLine();
-            Console.Write("Prix de la consultation :");
-            decimal prixConsultation = Convert.ToDecimal(Console.ReadLine());
-            SqlCommand command = new SqlCommand("INSERT TypeConsultation (Type, Prix) OUTPUT INSERTED.ID VALUES(@t,@p)", Connection.Instance);
-            command.Parameters.Add(new SqlParameter("@t", tp.Type));
-            command.Parameters.Add(new SqlParameter("@p", tp.Prix));
+            SqlCommand command = null;
+            string type = string.Empty;
+            decimal prixConsultation = 0.00M;
+            int choix = 0;
+            switch (value)
+            {
+                case "Add":
+                   
+                    try
+                    {
+                        Console.Write("Combien de Type de consultation voulez vous insérer ? :");
+                       choix = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("pas un chiffre");
+                    }
+
+                    for(int i = 0; i < choix; i++)
+                    {
+                        Console.Write("Type de consultation :");
+                        type = Console.ReadLine();
+                        Console.Write("Prix de la consultation :");
+                        prixConsultation = Convert.ToDecimal(Console.ReadLine());
+                        command = new SqlCommand("INSERT INTO TypeConsultation (Type, Prix) OUTPUT INSERTED.ID VALUES(@t,@p)", Connection.Instance);
+                        command.Parameters.Add(new SqlParameter("@t", type));
+                        command.Parameters.Add(new SqlParameter("@p", prixConsultation));
+                    }
+
+                    
+                    break;
+
+            }
             Connection.Instance.Open();
-            tp.Id = (int)command.ExecuteScalar();
+            if (Equals(value, "Add")) tp.Id = (int)command.ExecuteScalar();
             command.Dispose();
             Connection.Instance.Close();
         }
 
-        public List<TypeConsultation> ListTypeConsultation = new List<TypeConsultation>();
+
         public List<TypeConsultation> GetTypeConsultation(string typeConsultation)
         {
+            List<TypeConsultation> ListTypeConsultation = new List<TypeConsultation>();
             SqlCommand command;
             if (Equals(typeConsultation, string.Empty))
             {
-              command   = new SqlCommand("SELECT * FROM TypeConsultation ORDER BY Type", Connection.Instance);
+                command = new SqlCommand("SELECT * FROM TypeConsultation", Connection.Instance);
             }
             else
             {
@@ -80,7 +107,7 @@ namespace Hopital.Classes
             Connection.Instance.Close();
             return ListTypeConsultation;
         }
-     
+
 
         #endregion
 

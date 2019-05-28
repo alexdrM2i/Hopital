@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Hopital.Classes
@@ -39,6 +40,8 @@ namespace Hopital.Classes
             {
                 Console.WriteLine($"1 - {Messages.TitrePatients}");
                 Console.WriteLine($"2 - {Messages.TitreMedecin}");
+                Console.WriteLine($"3 - Gestion des consultations");
+
                 Console.WriteLine($"9 - {Messages.ClearConsole}");
                 Console.WriteLine("0 - Quitter");
                 Console.WriteLine(" ");
@@ -59,6 +62,9 @@ namespace Hopital.Classes
                         break;
                     case 2:
                         MenuMedecinPrincipal();
+                        break;
+                    case 3:
+                        MenuGestionRdv();
                         break;
 
                     case 0:
@@ -137,6 +143,9 @@ namespace Hopital.Classes
                             case 2:
                                 MenuMedecinSpecialite();
                                 break;
+                            case 3:
+                                MenuGestionRdv();
+                                break;
                         }
                         break;
 
@@ -150,6 +159,8 @@ namespace Hopital.Classes
             }
             while (choix != 3);
         }
+
+      
 
         private static void MenuPatientPrincipal()
         {
@@ -247,5 +258,50 @@ namespace Hopital.Classes
 
             }
         }
+
+        private static void MenuGestionRdv()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Titre();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" ");
+            Console.WriteLine("Gestion des consultations");
+            Console.WriteLine("1 - Lister type de consultations");
+            Console.WriteLine("2 - Ajouter type de consultations");
+            Console.WriteLine($"0- {Messages.RetourMenuPrincipal}");
+
+            try
+            {
+                choix = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+
+                Messages.AfficherMessageErreur(Messages.NotANumber);
+            }
+
+            switch (choix)
+
+            {
+                case 1:
+
+                    List<TypeConsultation> listeTypeConsultation = DataBase.Instance.GetTypeConsultation("");
+                    if (listeTypeConsultation.Count == 0)
+                        Console.WriteLine("No data was found in database");
+                    listeTypeConsultation.ForEach(x => Console.WriteLine($"{x.Id} {x.Type} {x.Prix} euros"));
+                    Console.WriteLine(" ");
+                    break;
+                case 2:
+                    DataBase.Instance.UpdateTypeConsultation("Add");
+                    break;
+                case 0:
+                    MenuMedecinPrincipal();
+                    break;
+
+            }
+
+        }
+
     }
 }
