@@ -60,7 +60,7 @@ namespace Hopital.Classes
                     case 2:
                         MenuMedecinPrincipal();
                         break;
-                  
+
                     case 0:
                         Console.Write(Messages.Sortie);
                         string choixSortie = Console.ReadLine();
@@ -82,7 +82,7 @@ namespace Hopital.Classes
 
                     default:
                         Messages.AfficherMessageErreur(Messages.NoFunction);
-                      
+
                         break;
                 }
             }
@@ -139,7 +139,7 @@ namespace Hopital.Classes
                                 break;
                         }
                         break;
-                 
+
                     case 0:
                         Accueil();
                         break;
@@ -185,7 +185,7 @@ namespace Hopital.Classes
                 case 2:
                     Console.Clear();
                     Titre();
-                   // DataBase.Instance.AddPatient();
+                    // DataBase.Instance.AddPatient();
                     Console.Clear();
                     break;
                 case 3:
@@ -202,7 +202,7 @@ namespace Hopital.Classes
                     Titre();
                     Console.Clear();
                     break;
-            
+
             }
 
         }
@@ -218,7 +218,7 @@ namespace Hopital.Classes
             Console.WriteLine($"{Messages.TitreSpecialiteMedecin}");
             Console.WriteLine($"1 - {Messages.TitreListerSpecialiteMedecin}");
             Console.WriteLine($"2 - {Messages.TitreAjouterSpecialiteMedecin}");
-          
+
             Console.WriteLine($"0 - {Messages.RetourMenuPrincipalMedecin}");
 
             try
@@ -239,7 +239,7 @@ namespace Hopital.Classes
                     break;
                 case 2:
                     DataBase.Instance.AddSpecialite();
-                    
+
                     break;
                 case 0:
                     MenuMedecinPrincipal();

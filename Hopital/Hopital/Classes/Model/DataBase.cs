@@ -33,6 +33,55 @@ namespace Hopital.Classes
         }
 
         #region GESTTION DES CONSULTATIONS
+
+        public void AddTypeConsultation()
+        {
+            TypeConsultation tp = new TypeConsultation();
+            Console.Write("Type de consultation :");
+            string type = Console.ReadLine();
+            Console.Write("Prix de la consultation :");
+            decimal prixConsultation = Convert.ToDecimal(Console.ReadLine());
+            SqlCommand command = new SqlCommand("INSERT TypeConsultation (Type, Prix) OUTPUT INSERTED.ID VALUES(@t,@p)", Connection.Instance);
+            command.Parameters.Add(new SqlParameter("@t", tp.Type));
+            command.Parameters.Add(new SqlParameter("@p", tp.Prix));
+            Connection.Instance.Open();
+            tp.Id = (int)command.ExecuteScalar();
+            command.Dispose();
+            Connection.Instance.Close();
+        }
+
+        public List<TypeConsultation> ListTypeConsultation = new List<TypeConsultation>();
+        public List<TypeConsultation> GetTypeConsultation(string typeConsultation)
+        {
+            SqlCommand command;
+            if (Equals(typeConsultation, string.Empty))
+            {
+              command   = new SqlCommand("SELECT * FROM TypeConsultation ORDER BY Type", Connection.Instance);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM TypeConsultation WHERE Type = @t", Connection.Instance);
+                command.Parameters.Add(new SqlParameter("@t", typeConsultation));
+            }
+            Connection.Instance.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                TypeConsultation tp = new TypeConsultation
+                {
+                    Id = reader.GetInt32(0),
+                    Type = reader.GetString(1),
+                    Prix = reader.GetDecimal(2)
+                };
+                ListTypeConsultation.Add(tp);
+            }
+            reader.Close();
+            command.Dispose();
+            Connection.Instance.Close();
+            return ListTypeConsultation;
+        }
+     
+
         #endregion
 
         #region GESTION PARTIE MEDECIN
@@ -191,7 +240,7 @@ namespace Hopital.Classes
                 listeSpecialites = new List<Specialite>();
 
                 listeSpecialites = GetSpecialite();
-               
+
                 listeSpecialites.ForEach(x =>
                 {
                     if (x.SpecialiteM.ToLower() == SpecM.ToLower())
@@ -199,7 +248,7 @@ namespace Hopital.Classes
                         idSpec = x.Id;
                     }
                 });
-                if(listeSpecialites.Count == 0)
+                if (listeSpecialites.Count == 0)
                 {
                     Console.WriteLine("La specialité n'existe pas");
                 }
@@ -229,11 +278,7 @@ namespace Hopital.Classes
             listeMedecins = GetMedecinById(idM);
 
             listeMedecins.ForEach(x => Console.WriteLine(x.ToString()));
-           
-              
 
-          
-        
         }
 
         public void AddMedecin()

@@ -11,7 +11,7 @@ namespace Hopital.Classes.Tools
         {
             bool res = false;
 
-            res = Regex.IsMatch(, number);
+            //res = Regex.IsMatch(, number);
 
             return res;
         }
