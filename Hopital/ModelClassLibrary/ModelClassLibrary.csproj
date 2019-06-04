@@ -42,6 +42,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Chirurgie.cs" />
+    <Compile Include="Models\Consultation.cs" />
+    <Compile Include="Models\DataBase.cs" />
+    <Compile Include="Models\ExamensBiologiques.cs" />
+    <Compile Include="Models\ExamensRadiologiques.cs" />
+    <Compile Include="Models\Facture.cs" />
+    <Compile Include="Models\Hospitalisation.cs" />
+    <Compile Include="Models\Medecin.cs" />
+    <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\Prescription.cs" />
+    <Compile Include="Models\RDV.cs" />
+    <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\Specialite.cs" />
+    <Compile Include="Models\Traitement.cs" />
+    <Compile Include="Models\TypeConsultation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

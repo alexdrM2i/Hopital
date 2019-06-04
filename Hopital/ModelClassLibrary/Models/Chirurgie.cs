@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace ModelClassLibrary.Models
+namespace Hopital.Classes
 {
-    class Chirurgie
+    public class Chirurgie
     {
-        private string toto { get; set; }
+        private int id;
+        private string chirurgien;
+        private string anesthesiste;
+
+        public int Id { get => id; set => id = value; }
+        public string Chirurgien { get => chirurgien; set => chirurgien = value; }
+        public string Anesthesiste { get => anesthesiste; set => anesthesiste = value; }
+
+        public Chirurgie()
+        {
+            
+        }
     }
 }
