@@ -8,5 +8,6 @@ namespace ModelClassLibrary.Models
 {
     class Chirurgie
     {
+        private string toto { get; set; }
     }
 }
