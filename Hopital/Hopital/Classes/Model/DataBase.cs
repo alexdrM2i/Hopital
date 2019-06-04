@@ -40,22 +40,23 @@ namespace Hopital.Classes
             SqlCommand command = null;
             string type = string.Empty;
             decimal prixConsultation = 0.00M;
-            int choix = 0;
+            string choix = string.Empty;
+            int iteration = 0;
             switch (value)
             {
                 case "Add":
-                   
-                    try
+
+                    
+
+                    while (!t)
                     {
                         Console.Write("Combien de Type de consultation voulez vous insérer ? :");
-                       choix = Convert.ToInt32(Console.ReadLine());
+                        iteration = Convert.ToInt32(Console.ReadLine());
                     }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("pas un chiffre");
-                    }
+                    
+                 
 
-                    for(int i = 0; i < choix; i++)
+                    for (int i = 0; i < iteration; i++)
                     {
                         Console.Write("Type de consultation :");
                         type = Console.ReadLine();
@@ -66,7 +67,7 @@ namespace Hopital.Classes
                         command.Parameters.Add(new SqlParameter("@p", prixConsultation));
                     }
 
-                    
+
                     break;
 
             }
