@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -79,10 +80,7 @@
     <Compile Include="Views\Hopital.xaml.cs">
       <DependentUpon>Hopital.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AccueilViewModel.cs" />
-    <Compile Include="ViewModel\AjoutPatientViewModel.xaml.cs">
-      <DependentUpon>AjoutPatientViewModel.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\AccueilViewModel.cs" />
     <Compile Include="Views\Accueil.xaml.cs">
       <DependentUpon>Accueil.xaml</DependentUpon>
     </Compile>
@@ -130,10 +128,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ViewModel\AjoutPatientViewModel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Accueil.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +137,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
