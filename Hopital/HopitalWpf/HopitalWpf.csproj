@@ -74,6 +74,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FunctionalFun.UI.cs" />
+    <Compile Include="ViewModels\AuthentificationViewModels.cs" />
+    <Compile Include="Views\Hopital.xaml.cs">
+      <DependentUpon>Hopital.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AccueilViewModel.cs" />
     <Compile Include="ViewModel\AjoutPatientViewModel.xaml.cs">
       <DependentUpon>AjoutPatientViewModel.xaml</DependentUpon>
@@ -111,6 +116,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Hopital.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelClassLibrary\ModelClassLibrary.csproj">
+      <Project>{6184DAFC-4C13-48DF-B5E7-27E35B5975E3}</Project>
+      <Name>ModelClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ViewModel\AjoutPatientViewModel.xaml">
