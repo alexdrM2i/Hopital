@@ -67,9 +67,10 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="784*"/>
+            <ColumnDefinition Width="246*"/>
+            <ColumnDefinition Width="539*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Column="1" Header="Authentification" Foreground="#fff"  HorizontalAlignment="Left" Height="171" Margin="155.2,86,0,0" VerticalAlignment="Top" Width="495">
+        <GroupBox Grid.Column="1" Header="Authentification" Foreground="#fff"  HorizontalAlignment="Left" Height="171" Margin="155.2,86,0,0" VerticalAlignment="Top" Width="495" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="9*"/>
@@ -78,7 +79,7 @@
                 <Label Content="Identifiant :" HorizontalAlignment="Left" Margin="25.8,10,0,0" VerticalAlignment="Top" Width="79" FontSize="14" FontFamily="Arial" Foreground="#fff" Grid.Column="1" />
                 <Label Content="Mot de passe :" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="104" FontSize="14" FontFamily="Arial" Margin="0.6,55,0,0"  Foreground="#fff" Grid.Column="1"  />
                 <TextBox  Text="{Binding Identifiant}"  HorizontalAlignment="Left" Height="26" Margin="153.6,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Background="#FF077EA9" Foreground="#FFF" Grid.Column="1" />
-             
+
                 <PasswordBox
                     ui:PasswordBoxAssistant.BindPassword="True"   
                     ui:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -96,7 +97,7 @@
 
             </Grid>
         </GroupBox>
-        <Label  Foreground="white" FontWeight="Bold" Content="{Binding Message}" Grid.Column="1" HorizontalAlignment="Left" Margin="155.2,289,0,0" VerticalAlignment="Top" Width="495"/>
+        <Label  Foreground="white" FontWeight="Bold" Content="{Binding Message}" Grid.Column="1" HorizontalAlignment="Left" Margin="155.2,289,0,0" VerticalAlignment="Top" Width="495" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
