@@ -48,11 +48,11 @@ namespace Hopital.Classes
 
                     
 
-                    while (!t)
-                    {
+                    //while (!t)
+                    //{
                         Console.Write("Combien de Type de consultation voulez vous insérer ? :");
                         iteration = Convert.ToInt32(Console.ReadLine());
-                    }
+                    //}
                     
                  
 
