@@ -12,15 +12,18 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ModelClassLibrary.Models;
+using Hopital = HopitalWpf.Views.Hopital;
 
 namespace HopitalWpf.ViewModels
 {
     public class AuthentificationViewModels : ViewModelBase, INotifyPropertyChanged
     {
         public Authentification _a { get; set; }
-        public Authentification _au { get; set; }
+       // public Authentification _au { get; set; }
 
         private string identifiant;
+
+        public Views.Hopital w { get; set; }
         private string password;
         private string message;
 
@@ -65,8 +68,9 @@ namespace HopitalWpf.ViewModels
 
         public ICommand ValiderCommand { get; set; }
 
-        public AuthentificationViewModels()
+        public AuthentificationViewModels(Views.Hopital wv)
         {
+            w = wv;
             _a = new Authentification();
             ValiderCommand = new RelayCommand(CheckLog);
         }
@@ -81,7 +85,10 @@ namespace HopitalWpf.ViewModels
                 if (string.Equals(au.Identifiant, _a.Identifiant) && string.Equals(au.Password, _a.Password))
                 {
                     Message = string.Empty;
-                    Message = "Good authentification";
+                    //Message = "Good authentification";
+                    Views.Accueil a = new Views.Accueil();
+                    a.Show();
+                    w.Close();
                     return;
                 }
                 else

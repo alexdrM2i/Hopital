@@ -11,7 +11,7 @@ namespace HopitalWpf.Views
         public Hopital()
         {
             InitializeComponent();
-            DataContext = new AuthentificationViewModels();
+            DataContext = new AuthentificationViewModels(this);
         }
     }
 }

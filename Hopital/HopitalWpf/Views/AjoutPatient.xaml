@@ -8,20 +8,20 @@
         Title="AjoutPatient" Height="450" Width="500">
     <Grid>
         <Label Content="Nom: " Margin="29,10,406.6,375"></Label>
-        <TextBox Text="" Margin="176,10,126.6,375"></TextBox>
+        <TextBox   Text="{Binding Nom}" Margin="176,10,126.6,375"></TextBox>
         <Label Content="Prenom: " Margin="29,50,406.6,335"></Label>
-        <TextBox Text="" Margin="176,50,126.6,335" RenderTransformOrigin="0.841,1.056" ></TextBox>
+        <TextBox  Text="{Binding Prenom}"  Margin="176,50,126.6,335" RenderTransformOrigin="0.841,1.056" ></TextBox>
         <Label Content="Telephone: " Margin="29,95,388.6,291"></Label>
-        <TextBox Text="" Margin="176,90,126.6,295" RenderTransformOrigin="0.841,1.056" ></TextBox>
-        <Button Content="Enregistrer" Margin="176,343,126.6,27"></Button>
+        <TextBox  Text="{Binding Tel}"  Margin="176,90,126.6,295" RenderTransformOrigin="0.841,1.056" ></TextBox>
+        <Button Content="Enregistrer" Margin="176,343,126.6,27" Command="{Binding AddPatientCommand}"></Button>
         <Label Content="N° securite social: " Margin="29,129,363.6,256"/>
-        <TextBox Text="" Margin="176,129,126.6,256"/>
+        <TextBox  Text="{Binding CodeAssurance}"  Margin="176,129,126.6,256"/>
         <Label Content="Né le: " Margin="29,169,406.6,216"/>
-        <TextBox Text="" Margin="176,169,126.6,216" RenderTransformOrigin="0.841,1.056" />
+        <TextBox  Text="{Binding DateNaissance}"  Margin="176,169,126.6,216" RenderTransformOrigin="0.841,1.056" />
         <Label Content="Adresse: " Margin="29,214,388.6,176"/>
-        <TextBox Text="" Margin="176,209,126.6,176" RenderTransformOrigin="0.841,1.056" />
+        <TextBox  Text="{Binding Adresse}"  Margin="176,209,126.6,176" RenderTransformOrigin="0.841,1.056" />
         <Label Content="Sexe: " Margin="29,254,388.6,136"/>
-        <RadioButton Content="Homme" Margin="176,254,234.6,136"></RadioButton>
-        <RadioButton Content="Femme" Margin="284,254,126.6,136"></RadioButton>
+        <RadioButton IsChecked="{Binding  Path=TypeSexeM, Mode = TwoWay}" Content="Homme" Margin="176,254,234.6,136"></RadioButton>
+        <RadioButton IsChecked="{Binding Path=TypeSexeF, Mode = TwoWay}" Content="Femme" Margin="284,254,126.6,136"></RadioButton>
     </Grid>
 </Window>

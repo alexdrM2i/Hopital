@@ -76,6 +76,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FunctionalFun.UI.cs" />
+    <Compile Include="ViewModels\PatientViewModels.cs" />
     <Compile Include="ViewModels\AuthentificationViewModels.cs" />
     <Compile Include="Views\Hopital.xaml.cs">
       <DependentUpon>Hopital.xaml</DependentUpon>
