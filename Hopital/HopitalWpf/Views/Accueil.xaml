@@ -1,0 +1,34 @@
+﻿<Window x:Class="HopitalWpf.Views.Accueil"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HopitalWpf.Views"
+        mc:Ignorable="d"
+        Title="Accueil" Height="450" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Gestion de l'hopital" FontSize="32" FontStyle="Oblique" TextAlignment="Center" Background="AntiqueWhite" Foreground="BlueViolet"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Gestion Medecin" FontSize="20" TextAlignment="Center" TextDecorations="underline"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Gestion du patient" FontSize="20" TextAlignment="Center" TextDecorations="underline"></TextBlock>
+        <Button Grid.Row="2" Grid.Column="0" FontSize="18" Content="Ajouter medecin" Width="150" Height="50"></Button>
+        <Button Grid.Row="3" Grid.Column="0" FontSize="18" Content="Modifier medecin" Width="150" Height="50"></Button>
+        <Button Grid.Row="2" Grid.Column="1" FontSize="18" Content="Ajouter patient" Width="150" Height="50" Command="{Binding ajoutPatient}"></Button>
+        <Button Grid.Row="3" Grid.Column="1" FontSize="18" Content="Modifier patient" Width="150" Height="50"></Button>
+        <Button Grid.Row="4" Grid.Column="1" FontSize="18" Content="Prendre RDV" Width="150" Height="50"></Button>
+        <Button Grid.Row="5" Grid.Column="1" FontSize="18" Content="Afficher les RDV" Width="150" Height="50"></Button>
+
+
+    </Grid>
+</Window>

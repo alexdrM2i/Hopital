@@ -1,0 +1,27 @@
+﻿<Window x:Class="HopitalWpf.Views.AjoutPatient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HopitalWpf.Views"
+        mc:Ignorable="d"
+        Title="AjoutPatient" Height="450" Width="500">
+    <Grid>
+        <Label Content="Nom: " Margin="29,10,406.6,375"></Label>
+        <TextBox Text="" Margin="176,10,126.6,375"></TextBox>
+        <Label Content="Prenom: " Margin="29,50,406.6,335"></Label>
+        <TextBox Text="" Margin="176,50,126.6,335" RenderTransformOrigin="0.841,1.056" ></TextBox>
+        <Label Content="Telephone: " Margin="29,95,388.6,291"></Label>
+        <TextBox Text="" Margin="176,90,126.6,295" RenderTransformOrigin="0.841,1.056" ></TextBox>
+        <Button Content="Enregistrer" Margin="176,343,126.6,27"></Button>
+        <Label Content="N° securite social: " Margin="29,129,363.6,256"/>
+        <TextBox Text="" Margin="176,129,126.6,256"/>
+        <Label Content="Né le: " Margin="29,169,406.6,216"/>
+        <TextBox Text="" Margin="176,169,126.6,216" RenderTransformOrigin="0.841,1.056" />
+        <Label Content="Adresse: " Margin="29,214,388.6,176"/>
+        <TextBox Text="" Margin="176,209,126.6,176" RenderTransformOrigin="0.841,1.056" />
+        <Label Content="Sexe: " Margin="29,254,388.6,136"/>
+        <RadioButton Content="Homme" Margin="176,254,234.6,136"></RadioButton>
+        <RadioButton Content="Femme" Margin="284,254,126.6,136"></RadioButton>
+    </Grid>
+</Window>
